@@ -1,7 +1,7 @@
-const pool = require("../config/db");
+import pool from "../config/db.js";
 
 // GET /api/products — with filters
-exports.getProducts = async (req, res, next) => {
+export const getProducts = async (req, res, next) => {
     try {
         const { crop, brand, category, min, max, sort, q, page = 1, limit = 20 } = req.query;
         const offset = (page - 1) * limit;
@@ -65,7 +65,7 @@ exports.getProducts = async (req, res, next) => {
 };
 
 // GET /api/products/featured
-exports.getFeatured = async (req, res, next) => {
+export const getFeatured = async (req, res, next) => {
     try {
         const result = await pool.query("SELECT * FROM products ORDER BY discount_price ASC LIMIT 5");
         const products = result.rows.map(mapProduct);
@@ -74,7 +74,7 @@ exports.getFeatured = async (req, res, next) => {
 };
 
 // GET /api/products/trending
-exports.getTrending = async (req, res, next) => {
+export const getTrending = async (req, res, next) => {
     try {
         const result = await pool.query("SELECT * FROM products ORDER BY created_at DESC LIMIT 5");
         const products = result.rows.map(mapProduct);
@@ -83,7 +83,7 @@ exports.getTrending = async (req, res, next) => {
 };
 
 // GET /api/products/:id
-exports.getProductById = async (req, res, next) => {
+export const getProductById = async (req, res, next) => {
     try {
         const result = await pool.query("SELECT * FROM products WHERE id = $1", [req.params.id]);
         if (result.rows.length === 0) {
@@ -94,7 +94,7 @@ exports.getProductById = async (req, res, next) => {
 };
 
 // POST /api/products (admin)
-exports.createProduct = async (req, res, next) => {
+export const createProduct = async (req, res, next) => {
     try {
         const { name, category, brand, price, discount_price, stock, description, dosage_guide, size } = req.body;
         const image_url = req.file ? `/uploads/${req.file.filename}` : req.body.image_url;

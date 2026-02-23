@@ -1,4 +1,4 @@
-exports.errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res, next) => {
     console.error("❌ Error:", err.message);
     console.error(err.stack);
 
@@ -9,7 +9,7 @@ exports.errorHandler = (err, req, res, next) => {
     });
 };
 
-exports.notFound = (req, res, next) => {
+export const notFound = (req, res, next) => {
     const error = new Error(`Not Found - ${req.originalUrl}`);
     error.statusCode = 404;
     next(error);

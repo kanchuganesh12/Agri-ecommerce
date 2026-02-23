@@ -1,9 +1,9 @@
-const pool = require("../config/db");
-const { hashPassword, comparePassword } = require("../utils/hashPassword");
-const generateToken = require("../utils/generateToken");
+import pool from "../config/db.js";
+import { hashPassword, comparePassword } from "../utils/hashPassword.js";
+import generateToken from "../utils/generateToken.js";
 
 // POST /api/auth/register
-exports.register = async (req, res, next) => {
+export const register = async (req, res, next) => {
     try {
         const { name, email, phone, password, state, district } = req.body;
 
@@ -34,7 +34,7 @@ exports.register = async (req, res, next) => {
 };
 
 // POST /api/auth/login
-exports.login = async (req, res, next) => {
+export const login = async (req, res, next) => {
     try {
         const { phone, email, password } = req.body;
         const identifier = phone || email;
@@ -68,7 +68,7 @@ exports.login = async (req, res, next) => {
 };
 
 // GET /api/auth/me
-exports.getMe = async (req, res, next) => {
+export const getMe = async (req, res, next) => {
     try {
         const result = await pool.query(
             "SELECT id, name, email, phone, role, state, district, created_at FROM users WHERE id = $1",

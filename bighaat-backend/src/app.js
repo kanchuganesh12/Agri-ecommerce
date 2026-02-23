@@ -1,13 +1,17 @@
-const express = require("express");
-const cors = require("cors");
-const path = require("path");
+import express from "express";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from 'url';
 
-const authRoutes = require("./routes/auth.routes");
-const productRoutes = require("./routes/product.routes");
-const cartRoutes = require("./routes/cart.routes");
-const orderRoutes = require("./routes/order.routes");
-const advisoryRoutes = require("./routes/advisory.routes");
-const { errorHandler, notFound } = require("./middleware/error.middleware");
+import authRoutes from "./routes/auth.routes.js";
+import productRoutes from "./routes/product.routes.js";
+import cartRoutes from "./routes/cart.routes.js";
+import orderRoutes from "./routes/order.routes.js";
+import advisoryRoutes from "./routes/advisory.routes.js";
+import { errorHandler, notFound } from "./middleware/error.middleware.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -35,4 +39,4 @@ app.use("/api/advisory", advisoryRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
-module.exports = app;
+export default app;

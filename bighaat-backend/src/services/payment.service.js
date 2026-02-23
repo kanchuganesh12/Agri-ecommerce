@@ -1,7 +1,4 @@
-// Payment service placeholder
-// Integrate with Razorpay / PhonePe / Paytm as needed
-
-exports.initiatePayment = async ({ orderId, amount, method }) => {
+export const initiatePayment = async ({ orderId, amount, method }) => {
     // For now, return mock success
     return {
         success: true,
@@ -13,6 +10,6 @@ exports.initiatePayment = async ({ orderId, amount, method }) => {
     };
 };
 
-exports.verifyPayment = async (transactionId) => {
+export const verifyPayment = async (transactionId) => {
     return { verified: true, transactionId };
 };

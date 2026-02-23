@@ -1,7 +1,7 @@
-const pool = require("../config/db");
+import pool from "../config/db.js";
 
 // POST /api/orders/place
-exports.placeOrder = async (req, res, next) => {
+export const placeOrder = async (req, res, next) => {
     try {
         const userId = req.user.id;
         const { address, city, state, pincode, phone, paymentMethod } = req.body;
@@ -54,7 +54,7 @@ exports.placeOrder = async (req, res, next) => {
 };
 
 // GET /api/orders
-exports.getOrders = async (req, res, next) => {
+export const getOrders = async (req, res, next) => {
     try {
         const orders = await pool.query(
             `SELECT o.*, json_agg(json_build_object('name', p.name, 'qty', oi.quantity, 'price', oi.price)) as items
@@ -79,7 +79,7 @@ exports.getOrders = async (req, res, next) => {
 };
 
 // GET /api/orders/:id
-exports.getOrderById = async (req, res, next) => {
+export const getOrderById = async (req, res, next) => {
     try {
         const orderId = req.params.id.replace("BH", "");
         const order = await pool.query("SELECT * FROM orders WHERE id = $1 AND user_id = $2", [orderId, req.user.id]);

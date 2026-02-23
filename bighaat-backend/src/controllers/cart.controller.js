@@ -1,7 +1,7 @@
-const pool = require("../config/db");
+import pool from "../config/db.js";
 
 // GET /api/cart — get user's cart
-exports.getCart = async (req, res, next) => {
+export const getCart = async (req, res, next) => {
     try {
         const userId = req.user.id;
 
@@ -27,7 +27,7 @@ exports.getCart = async (req, res, next) => {
 };
 
 // POST /api/cart/add — add item
-exports.addToCart = async (req, res, next) => {
+export const addToCart = async (req, res, next) => {
     try {
         const userId = req.user.id;
         const { product_id, quantity = 1 } = req.body;
@@ -64,7 +64,7 @@ exports.addToCart = async (req, res, next) => {
 };
 
 // PUT /api/cart/update/:itemId
-exports.updateCartItem = async (req, res, next) => {
+export const updateCartItem = async (req, res, next) => {
     try {
         const { quantity } = req.body;
         if (quantity < 1) return res.status(400).json({ message: "Quantity must be at least 1" });
@@ -75,7 +75,7 @@ exports.updateCartItem = async (req, res, next) => {
 };
 
 // DELETE /api/cart/remove/:itemId
-exports.removeFromCart = async (req, res, next) => {
+export const removeFromCart = async (req, res, next) => {
     try {
         await pool.query("DELETE FROM cart_items WHERE id = $1", [req.params.itemId]);
         res.json({ message: "Item removed from cart" });
@@ -83,7 +83,7 @@ exports.removeFromCart = async (req, res, next) => {
 };
 
 // DELETE /api/cart/clear
-exports.clearCart = async (req, res, next) => {
+export const clearCart = async (req, res, next) => {
     try {
         const cart = await pool.query("SELECT id FROM cart WHERE user_id = $1", [req.user.id]);
         if (cart.rows.length > 0) {

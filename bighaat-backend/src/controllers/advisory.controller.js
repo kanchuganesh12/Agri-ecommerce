@@ -1,7 +1,7 @@
-const pool = require("../config/db");
+import pool from "../config/db.js";
 
 // GET /api/advisory?crop=rice&stage=germination
-exports.getAdvisory = async (req, res, next) => {
+export const getAdvisory = async (req, res, next) => {
     try {
         const { crop, stage } = req.query;
         let query = `SELECT a.*, c.name as crop_name FROM advisory a JOIN crops c ON c.id = a.crop_id`;
@@ -21,7 +21,7 @@ exports.getAdvisory = async (req, res, next) => {
 };
 
 // GET /api/advisory/stages/:crop
-exports.getCropStages = async (req, res, next) => {
+export const getCropStages = async (req, res, next) => {
     try {
         const { crop } = req.params;
         const { stage } = req.query;
@@ -54,7 +54,7 @@ exports.getCropStages = async (req, res, next) => {
 };
 
 // GET /api/advisory/pests/:crop
-exports.getPestAlerts = async (req, res, next) => {
+export const getPestAlerts = async (req, res, next) => {
     try {
         const { crop } = req.params;
         const result = await pool.query(
